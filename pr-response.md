@@ -49,6 +49,30 @@
 **How I verified no conflict remains:** `git rebase --continue` completed with "Successfully rebased and updated refs/heads/feature/watchlist" and no remaining conflict markers. Ran `pytest tests/ -v` — all 7 tests pass.
 
 
+### Commit history
+![commit history](commit-history.png)
 
-# PR Description
+## PR Description
 
+**What this feature does**
+Adds a watchlist feature to CineLog, parallel to the existing collection feature. Users can add films they intend to watch, view their watchlist, and each entry is added via `POST /watchlist/<user_id>/add` and viewed via `GET /watchlist/<user_id>`.
+
+**Design decisions**
+- **Default visibility:** [state whichever you finalized — e.g. "Watchlist entries default to `public=False`. A watchlist reveals what a user is currently curious about, which is more exploratory and less curated than a completed collection, so I chose to default it private and let users opt in to sharing. Full reasoning in Comment 4 above."]
+- **Sort order:** [state whichever you finalized — e.g. "The watchlist is sorted alphabetically by film title rather than by date added, since it's meant to be browsed as a lookup list rather than read as a chronological activity log. Full reasoning in Comment 5 above."]
+
+**How to manually test**
+1. Start the app: `python app.py`
+2. Seed a user and film via the Flask shell or a quick script (no creation endpoint exists yet):
+```python
+   from app import create_app, db
+   from models import User, Film
+   app = create_app()
+   with app.app_context():
+       user = User(username="tester", email="tester@example.com")
+       film = Film(title="Arrival", year=2016, genre="Sci-Fi")
+       db.session.add_all([user, film])
+       db.session.commit()
+       print(user.id, film.id)
+```
+3. Add a film to the watchlist:
