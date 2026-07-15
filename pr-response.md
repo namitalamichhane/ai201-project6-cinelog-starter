@@ -43,13 +43,10 @@
 
 
 
-# Comment 6 — Rebase
-
-**What conflicted:**
-
-**How I resolved it:**
-
-**How I verified no conflict remains:**
+## Comment 6 — Rebase
+**What conflicted:** `models.py` — `WatchlistEntry.film_id` was still defined as `db.Integer`, referencing the pre-refactor Film ID type, while `main` had migrated `Film.id` and related foreign keys to `db.String(36)` (UUID) in the "refactor: migrate film IDs from integer to UUID" commit.
+**How I resolved it:** Updated `WatchlistEntry.film_id` to `db.Column(db.String(36), db.ForeignKey("film.id"), nullable=False)` to match the UUID type used elsewhere in the schema. Also updated the docstring in `add_to_watchlist()` and the fake film_id in `test_add_to_watchlist_nonexistent_film_raises` from an integer to a UUID string. During conflict resolution I initially lost the `User`, `Film`, and `CollectionEntry` classes from `models.py` (an editor issue during the rebase caused the file to be overwritten instead of merged) — caught this because `pytest` failed with `NameError: name 'db' is not defined`, and restored the missing classes in a follow-up commit.
+**How I verified no conflict remains:** `git rebase --continue` completed with "Successfully rebased and updated refs/heads/feature/watchlist" and no remaining conflict markers. Ran `pytest tests/ -v` — all 7 tests pass.
 
 
 
