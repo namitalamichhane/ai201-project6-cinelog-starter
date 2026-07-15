@@ -1,26 +1,26 @@
-\# PR Response Doc — CineLog Watchlist Feature
+# PR Response Doc — CineLog Watchlist Feature
 
 
 
-\## AI Usage
+# AI Usage
 
 <!-- fill in at the end -->
 
 
 
-\## Comment 1 — Rename
+# Comment 1 — Rename
 
-\*\*What I did:\*\* Renamed `save\_to\_watchlist()` to `add\_to\_watchlist()` in `services/watchlist\_service.py` to match the naming convention used by `add\_to\_collection()` in the collection service. Updated the import and call site in `routes/watchlist/watchlist.py` (inside `add\_film()`).
+**What I did:** Renamed `save\_to\_watchlist()` to `add\_to\_watchlist()` in `services/watchlist\_service.py` to match the naming convention used by `add\_to\_collection()` in the collection service. Updated the import and call site in `routes/watchlist/watchlist.py` (inside `add\_film()`).
 
-\*\*How I verified:\*\* Ran a search across the whole repo for `save\_to\_watchlist` and confirmed zero remaining references. Ran `pytest tests/ -v` to confirm all existing tests still pass after the rename.
+**How I verified:** Ran a search across the whole repo for `save\_to\_watchlist` and confirmed zero remaining references. Ran `pytest tests/ -v` to confirm all existing tests still pass after the rename.
 
 
 
-\## Comment 2 — Deduplication
+# Comment 2 — Deduplication
 
-\*\*What I did:\*\* Added an `AlreadyInWatchlistError` exception and a duplicate check in `add\_to\_watchlist()`, querying `WatchlistEntry` by `user\_id` and `film\_id` before creating a new entry — mirroring the pattern used in `add\_to\_collection()` against `CollectionEntry`.
+**What I did:** Added an `AlreadyInWatchlistError` exception and a duplicate check in `add\_to\_watchlist()`, querying `WatchlistEntry` by `user\_id` and `film\_id` before creating a new entry — mirroring the pattern used in `add\_to\_collection()` against `CollectionEntry`.
 
-\*\*How I verified:\*\* Ran `pytest tests/ -v` to confirm existing tests still pass.
+**How I verified:** Ran `pytest tests/ -v` to confirm existing tests still pass.
 
 
 
@@ -29,35 +29,35 @@
 **How I verified:** Ran `pytest tests/test_watchlist.py -v` — all three tests pass. Ran the full suite with `pytest tests/ -v` to confirm nothing else broke.
 
 
-\## Comment 4 — Default visibility
+# Comment 4 — Default visibility
 
-\*\*My position:\*\*
+**My position:**
 
-\*\*Reasoning:\*\*
+**Reasoning:**
 
-\*\*Tradeoff acknowledged:\*\*
-
-
-
-\## Comment 5 — Sort order
-
-\*\*My position:\*\*
-
-\*\*Reasoning:\*\*
-
-\*\*Engagement with reviewer's point:\*\*
+**Tradeoff acknowledged:**
 
 
 
-\## Comment 6 — Rebase
+# Comment 5 — Sort order
 
-\*\*What conflicted:\*\*
+**My position:**
 
-\*\*How I resolved it:\*\*
+**Reasoning:**
 
-\*\*How I verified no conflict remains:\*\*
+**Engagement with reviewer's point:**
 
 
 
-\## PR Description
+# Comment 6 — Rebase
+
+**What conflicted:**
+
+**How I resolved it:**
+
+**How I verified no conflict remains:**
+
+
+
+# PR Description
 
