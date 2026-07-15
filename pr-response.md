@@ -24,12 +24,9 @@
 
 
 
-\## Comment 3 — Missing test
-
-\*\*What I did:\*\*
-
-\*\*How I verified:\*\*
-
+## Comment 3 — Missing test
+**What I did:** Created `tests/test_watchlist.py` following the fixture and structure of `tests/test_collection.py`. Added `test_add_to_watchlist_nonexistent_film_raises`, modeled directly on `test_add_to_collection_nonexistent_film_raises`, to confirm `FilmNotFoundError` is raised for a fake film_id instead of a database error. Also added `test_add_to_watchlist_creates_entry` and `test_add_to_watchlist_duplicate_raises` to cover the basic add and the Comment 2 dedup behavior.
+**How I verified:** Ran `pytest tests/test_watchlist.py -v` — all three tests pass. Ran the full suite with `pytest tests/ -v` to confirm nothing else broke.
 
 
 \## Comment 4 — Default visibility
